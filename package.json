@@ -1,0 +1,22 @@
+{
+  "name": "api-denuncias",
+  "version": "1.0.0",
+  "description": "API construída em NodeJS, Express e MongoDB, com integração ao serviço MapQuest.",
+  "main": "app.js",
+  "repository": "git@github.com:Buckshot-77/APIDenuncias.git",
+  "author": "Hugo Oliveira <hugo684@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.4"
+  },
+  "scripts": {
+    "start:dev": "nodemon server.js",
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.10.1"
+  }
+}
