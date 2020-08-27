@@ -9,6 +9,6 @@ if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
 app.use(express.json());
-app.use(complaintRoute);
+app.use('/v1/denuncias', complaintRoute);
 
 module.exports = app;

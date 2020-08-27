@@ -8,13 +8,22 @@ exports.createComplaint = async (req, res) => {
     let requestObject = req.body;
     const latitude = requestObject.latitude;
     const longitude = requestObject.longitude;
-    const locationResults = await axios.get(
+    const results = await axios.get(
       `http://www.mapquestapi.com/geocoding/v1/reverse?key=${apiKey}&location=${latitude},${longitude}&includeRoadMetadata=true&includeNearestIntersection=true`
     );
 
-    requestObject.locations = locationResults.data.results['0'].locations;
+    const locationResults = results.data.results['0'].locations[0];
 
-    if (requestObject.locations.length === 0) {
+    requestObject.endereco = {
+      logradouro: locationResults.street,
+      bairro: locationResults.adminArea6,
+      cidade: locationResults.adminArea5,
+      estado: locationResults.adminArea3,
+      pais: locationResults.adminArea1,
+      cep: locationResults.postalCode,
+    };
+
+    if (locationResults.length === 0) {
       throw new Error('Endereço não encontrado para essa localidade.');
     }
 
