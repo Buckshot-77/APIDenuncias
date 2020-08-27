@@ -1,21 +1,14 @@
 const express = require('express');
 const morgan = require('morgan');
 
+const complaintRoute = require('./routes/complaintRoute');
+
 const app = express();
-app.use(express.json());
+
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
-
-app.post('/', (request, response) => {
-  const requestObject = request.body;
-  const latitude = requestObject.latitude;
-  const longitude = requestObject.longitude;
-  console.log(latitude, longitude);
-  response.json({
-    status: 'success',
-    data: requestObject,
-  });
-});
+app.use(express.json());
+app.use(complaintRoute);
 
 module.exports = app;
