@@ -1,31 +1,39 @@
 const Complaint = require('../model/complaintModel');
-const axios = require('axios');
+const GeoLocationService = require('../utils/GeoLocationService');
+const Http = require('../utils/Http');
 
-const apiKey = process.env.API_KEY;
+exports.getComplaints = async (req, res) => {
+  try {
+    const complaints = await Complaint.find({});
+    res.status(200).json({
+      status: 'success',
+      data: complaints,
+    });
+  } catch (err) {
+    res.status(400).json({
+      status: 'fail',
+      message: err,
+    });
+  }
+};
 
 exports.createComplaint = async (req, res) => {
   try {
+    const http = new Http();
+    const geoLocationService = new GeoLocationService(http);
     let requestObject = req.body;
     const latitude = requestObject.latitude;
     const longitude = requestObject.longitude;
-    const results = await axios.get(
-      `http://www.mapquestapi.com/geocoding/v1/reverse?key=${apiKey}&location=${latitude},${longitude}&includeRoadMetadata=true&includeNearestIntersection=true`
-    );
-
-    const locationResults = results.data.results['0'].locations[0];
+    const address = await geoLocationService.getAddress(latitude, longitude);
 
     requestObject.endereco = {
-      logradouro: locationResults.street,
-      bairro: locationResults.adminArea6,
-      cidade: locationResults.adminArea5,
-      estado: locationResults.adminArea3,
-      pais: locationResults.adminArea1,
-      cep: locationResults.postalCode,
+      logradouro: address.street,
+      bairro: address.adminArea6,
+      cidade: address.adminArea5,
+      estado: address.adminArea3,
+      pais: address.adminArea1,
+      cep: address.postalCode,
     };
-
-    if (locationResults.length === 0) {
-      throw new Error('Endereço não encontrado para essa localidade.');
-    }
 
     const newComplaint = await Complaint.create(requestObject);
 
