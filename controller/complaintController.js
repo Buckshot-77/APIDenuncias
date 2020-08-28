@@ -7,6 +7,7 @@ exports.getComplaints = async (req, res) => {
     const complaints = await Complaint.find({});
     res.status(200).json({
       status: 'success',
+      results: complaints.length,
       data: complaints,
     });
   } catch (err) {
