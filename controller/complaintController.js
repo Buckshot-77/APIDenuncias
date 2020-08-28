@@ -43,7 +43,7 @@ exports.createComplaint = async (req, res) => {
     });
   } catch (err) {
     res.status(404).json({
-      error: { code: '1', message: err.message },
+      error: { message: err.message },
     });
   }
 };
