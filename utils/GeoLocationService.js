@@ -11,6 +11,10 @@ class GeoLocationService {
 
     const location = adressData.data.results[0].locations[0];
 
+    if (!location) {
+      throw new Error('Endereço não encontrado para essa localidade');
+    }
+
     return location;
   }
 }
