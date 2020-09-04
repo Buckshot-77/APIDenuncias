@@ -10,5 +10,5 @@ Para rodar o projeto, as variáveis de ambiente necessárias serão mandadas via
     1- Ter o nodejs instalado na máquina. https://nodejs.org/en/
     2 - npm install ou yarn install, conforme a preferência, na raiz do projeto
     3 - Adicionar um arquivo "config.env" na raiz do projeto com as variáveis de ambiente informadas via e-mail
-    4 - Rodar "yarn start:dev" ou "npm run start:dev", conforme a preferência.
+    4 - Rodar "yarn start" ou "npm run start", conforme a preferência.
     5 - Fazer as requisições de acordo com a documentação.
